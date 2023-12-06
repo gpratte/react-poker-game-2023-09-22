@@ -1,10 +1,10 @@
 import React from "react";
 import '../style/home.css';
-import {Link, Route, Routes} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
-import Game from "../../game/components/Game";
 
 const Home = () => {
+  // @ts-ignore
   return (
     <div>
       <br/>
@@ -14,9 +14,6 @@ const Home = () => {
           <Button variant="outline-secondary"> Game </Button>
         </Link>
       </p>
-      <Routes>
-        <Route path='/current-game' element={<Game/>}/>
-      </Routes>
     </div>
   )
 }
