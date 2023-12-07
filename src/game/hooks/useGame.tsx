@@ -5,7 +5,7 @@ import { GameData } from "../model/GameData";
 import {NotificationData} from "../../league/model/NotificationData";
 import {NotificationContextType} from "../../league/components/League";
 import leagueStore from "../../league/redux/leagueStore";
-
+import refreshGameAction from "../redux/refreshGameAction";
 
 function useGame() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -21,7 +21,7 @@ function useGame() {
         const gameData: GameData = await gameClient.getGame();
         // Change the number of paid players value just to see that things changed
         gameData.numPaidPlayers = Math.random();
-        leagueStore.dispatch({type: "REFRESH_GAME", game: gameData});
+        leagueStore.dispatch(refreshGameAction(gameData));
       } catch (error) {
         newNotification(NotificationData.fromObject(error));
       } finally {
@@ -39,7 +39,7 @@ function useGame() {
       setIsLoading(true);
       const gameData = await gameClient.getGame();
       gameData.numPaidPlayers = Math.random();
-      leagueStore.dispatch({type: "REFRESH_GAME", game: gameData});
+      leagueStore.dispatch(refreshGameAction(gameData));
     } catch (error) {
       newNotification(NotificationData.fromObject(error));
     } finally {

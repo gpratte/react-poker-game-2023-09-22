@@ -32,9 +32,7 @@ function Game(props:{game:GameData}) {
   const [detailsAccordionOpen, setDetailsAccordionOpen] = useState(true)
 
   if (_.isEmpty(game)) {
-    return (
-      <h1>No Game</h1>
-    )
+    return <h1>No Game</h1>
   }
 
   return (
