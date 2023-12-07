@@ -7,6 +7,7 @@ import {Accordion} from "react-bootstrap";
 import GamePlayers from "./GamePlayers";
 import Loading from "../../common/components/Loading";
 import {GameData} from "../model/GameData";
+import _ from "lodash";
 
 export interface GameContextType {
   game: GameData;
@@ -29,6 +30,12 @@ function Game(props:{game:GameData}) {
   } = useGame();
 
   const [detailsAccordionOpen, setDetailsAccordionOpen] = useState(true)
+
+  if (_.isEmpty(game)) {
+    return (
+      <h1>No Game</h1>
+    )
+  }
 
   return (
     <GameContext.Provider value={{game, refreshGame, showAddPlayer, setShowAddPlayer}}>
