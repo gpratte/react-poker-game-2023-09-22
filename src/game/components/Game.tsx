@@ -1,4 +1,5 @@
 import React, {createContext, useState} from "react";
+import { connect } from "react-redux";
 import Details from "./Details";
 import useGame from "../hooks/useGame";
 import '../../common/style/common.css'
@@ -6,6 +7,7 @@ import {Accordion} from "react-bootstrap";
 import GamePlayers from "./GamePlayers";
 import Loading from "../../common/components/Loading";
 import {GameData} from "../model/GameData";
+import _ from "lodash";
 
 export interface GameContextType {
   game: GameData;
@@ -16,10 +18,11 @@ export interface GameContextType {
 
 export const GameContext = createContext<GameContextType | null>(null);
 
-function Game() {
+function Game(props:{game:GameData}) {
+
+  const game: GameData = props.game;
 
   const {
-    game,
     refreshGame,
     isLoading,
     showAddPlayer,
@@ -27,6 +30,10 @@ function Game() {
   } = useGame();
 
   const [detailsAccordionOpen, setDetailsAccordionOpen] = useState(true)
+
+  if (_.isEmpty(game)) {
+    return <h1>No Game</h1>
+  }
 
   return (
     <GameContext.Provider value={{game, refreshGame, showAddPlayer, setShowAddPlayer}}>
@@ -49,4 +56,11 @@ function Game() {
   )
 }
 
-export default Game;
+// @ts-ignore
+function mapStateToProps(state) {
+  return {
+    game: state.game
+  };
+}
+
+export default connect(mapStateToProps)(Game);

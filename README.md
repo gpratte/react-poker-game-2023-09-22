@@ -25,8 +25,8 @@ React version
 * _create-react-app_ installed react version 18 (as you can see by the react version in the package.json).
 
 ## Branches
-### step 19 typescript
-Refactored react components to use typescript. Many of the files now end in .tsx.
+### step 20 redux
+Now using redux as a persistent store for the game.
 
 ### previous branches
 Previous steps can be found at https://github.com/gpratte/react-poker-game-2022-12-22

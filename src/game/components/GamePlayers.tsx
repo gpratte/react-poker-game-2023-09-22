@@ -7,14 +7,13 @@ import {GamePlayerData} from "../model/GamePlayerData";
 
 function GamePlayers() {
 
-  const {game, showAddPlayer, setShowAddPlayer} = useContext(GameContext) as GameContextType;
+  const {game, setShowAddPlayer} = useContext(GameContext) as GameContextType;
 
   const gamePlayers = game.players;
   //const isChop = this.isThereChop(gamePlayers);
   const isChop = false;
   const numPaidPlayers = game.numPaidPlayers;
 
-  // TODO should the processing of the players be moved to a context or a util file?
   const renderGamePlayers = (gamePlayers: Array<GamePlayerData>, isChop: boolean) => {
     if (!gamePlayers) {
       return;

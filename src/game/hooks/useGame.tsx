@@ -4,9 +4,10 @@ import gameClient from "../../clients/gameClient";
 import { GameData } from "../model/GameData";
 import {NotificationData} from "../../league/model/NotificationData";
 import {NotificationContextType} from "../../league/components/League";
+import leagueStore from "../../league/redux/leagueStore";
+import refreshGameAction from "../redux/refreshGameAction";
 
 function useGame() {
-  const [game, setGame] = useState<GameData>({} as GameData);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const {newNotification} = useContext(NotificationContext) as NotificationContextType;
   const [showAddPlayer, setShowAddPlayer] = useState(false);
@@ -17,10 +18,10 @@ function useGame() {
     async function init() {
       try {
         setIsLoading(true);
-        const gameData: GameData = await gameClient.getGame(game.id);
+        const gameData: GameData = await gameClient.getGame();
         // Change the number of paid players value just to see that things changed
         gameData.numPaidPlayers = Math.random();
-        setGame(gameData);
+        leagueStore.dispatch(refreshGameAction(gameData));
       } catch (error) {
         newNotification(NotificationData.fromObject(error));
       } finally {
@@ -36,9 +37,9 @@ function useGame() {
     console.log('refresh game')
     try {
       setIsLoading(true);
-      const gameData = await gameClient.getGame(game.id);
+      const gameData = await gameClient.getGame();
       gameData.numPaidPlayers = Math.random();
-      setGame(gameData);
+      leagueStore.dispatch(refreshGameAction(gameData));
     } catch (error) {
       newNotification(NotificationData.fromObject(error));
     } finally {
@@ -47,7 +48,6 @@ function useGame() {
   }
 
   return {
-    game,
     refreshGame,
     isLoading,
     showAddPlayer,
